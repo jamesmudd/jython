@@ -16,6 +16,7 @@ strategy:
 steps:
 - task: Ant@1
   inputs:
+    target: 'regrtest'
     workingDirectory: ''
     buildFile: 'build.xml'
     javaHomeOption: 'JDKVersion'
