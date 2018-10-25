@@ -30,14 +30,14 @@ jobs:
   pool:
     vmImage: 'ubuntu-16.04'
   steps:
-  - script: echo hello from Linux
+  - script: ant regrtest-travis
 - job: macOS
   pool:
     vmImage: 'macOS-10.13'
   steps:
-  - script: echo hello from macOS
+  - script: ant regrtest-travis
 - job: Windows
   pool:
     vmImage: 'vs2017-win2016'
   steps:
-  - script: echo hello from Windows
+  - script: ant regrtest-travis
