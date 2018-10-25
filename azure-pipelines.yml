@@ -3,24 +3,41 @@
 # Add steps that save build artifacts and more:
 # https://docs.microsoft.com/azure/devops/pipelines/languages/java
 
-pool:
-  vmImage: 'Ubuntu 16.04'
-strategy:
-    matrix:
-      Java8:
-        java.version: '1.8'
-      Java11:
-        java.version: '1.11'
-    maxParallel: 2
+#pool:
+#  vmImage: 'Ubuntu 16.04'
+#strategy:
+#    matrix:
+#      Java8:
+#        java.version: '1.8'
+#      Java11:
+#        java.version: '1.11'
+#    maxParallel: 2
 
-steps:
-- task: Ant@1
-  inputs:
-    target: 'regrtest'
-    workingDirectory: ''
-    buildFile: 'build.xml'
-    javaHomeOption: 'JDKVersion'
-    jdkVersionOption: '1.10'
-    jdkArchitectureOption: 'x64'
-    publishJUnitResults: false
-    testResultsFiles: '**/TEST-*.xml'
+#steps:
+#- task: Ant@1
+#  inputs:
+#    target: 'regrtest'
+#    workingDirectory: ''
+#    buildFile: 'build.xml'
+#    javaHomeOption: 'JDKVersion'
+#    jdkVersionOption: '1.10'
+#    jdkArchitectureOption: 'x64'
+#    publishJUnitResults: false
+#    testResultsFiles: '**/TEST-*.xml'
+    
+jobs:
+- job: Linux
+  pool:
+    vmImage: 'ubuntu-16.04'
+  steps:
+  - script: echo hello from Linux
+- job: macOS
+  pool:
+    vmImage: 'macOS-10.13'
+  steps:
+  - script: echo hello from macOS
+- job: Windows
+  pool:
+    vmImage: 'vs2017-win2016'
+  steps:
+  - script: echo hello from Windows
