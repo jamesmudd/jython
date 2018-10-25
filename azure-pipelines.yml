@@ -35,7 +35,7 @@ jobs:
   pool:
     vmImage: 'macOS-10.13'
   steps:
-  - script: ant regrtest-travis
+  - script: brew install ant; ant regrtest-travis
 - job: Windows
   pool:
     vmImage: 'vs2017-win2016'
