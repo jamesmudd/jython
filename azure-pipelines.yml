@@ -30,14 +30,25 @@ jobs:
   pool:
     vmImage: 'ubuntu-16.04'
   steps:
-  - script: ant regrtest-travis
+  - script: ant
+    displayName: Build
+  - script: ant regrtest
+    displayName: Tests
 - job: macOS
   pool:
     vmImage: 'macOS-10.13'
   steps:
-  - script: brew install ant; ant regrtest-travis
+  - script: brew install ant
+    displayName: Install Ant
+  - script: ant
+    displayName: Build
+  - script: ant regrtest-travis
+    displayName: Tests
 - job: Windows
   pool:
-    vmImage: 'vs2017-win2016'
+    vmImage: 'win1803'
   steps:
-  - script: ant regrtest-travis
+  - script: ant
+    displayName: Build
+  - script: ant regrtest
+    displayName: Tests
