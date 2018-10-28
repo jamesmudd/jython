@@ -37,25 +37,65 @@ jobs:
       jdkVersionOption: $(java.version)
       publishJUnitResults: true
       testResultsFiles: './dist/testreports/TEST-*.xml'
-  # - script: ant
-  #   displayName: Build
-  # - script: ant regrtest
-  #   displayName: Tests
-# - job: macOS
-#   pool:
-#     vmImage: 'macOS-10.13'
-#   steps:
-#   - script: brew install ant
-#     displayName: Install Ant
-#   - script: ant
-#     displayName: Build
-#   - script: ant regrtest-travis
-#     displayName: Tests
-# - job: Windows
-#   pool:
-#     vmImage: 'win1803'
-#   steps:
-#   - script: ant
-#     displayName: Build
-#   - script: ant regrtest
-#     displayName: Tests
+
+- job: macOS
+  pool:
+    vmImage: 'macOS-10.13'
+  strategy:
+    matrix:
+      Java7:
+        java.version: '1.7'
+      Java8:
+        java.version: '1.8'
+      Java10:
+        java.version: '1.10'
+  steps:
+  - checkout: self  # self represents the repo where the initial Pipelines YAML file was found
+    fetchDepth: 5 # shallow clone
+  - script: brew install ant
+    displayName: Install Ant
+  - task: Ant@1
+    displayName: Build
+    inputs:
+      buildFile: 'build.xml'
+      targets: 'developer-build'
+      jdkVersionOption: $(java.version)
+      publishJUnitResults: false
+  - task: Ant@1
+    displayName: Tests
+    inputs:
+      buildFile: 'build.xml'
+      targets: 'regrtest'
+      jdkVersionOption: $(java.version)
+      publishJUnitResults: true
+      testResultsFiles: './dist/testreports/TEST-*.xml'
+
+- job: Windows
+  pool:
+    vmImage: 'vs2017-win2016'
+  strategy:
+    matrix:
+      Java7:
+        java.version: '1.7'
+      Java8:
+        java.version: '1.8'
+      Java10:
+        java.version: '1.10'
+  steps:
+  - checkout: self  # self represents the repo where the initial Pipelines YAML file was found
+    fetchDepth: 5 # shallow clone
+  - task: Ant@1
+    displayName: Build
+    inputs:
+      buildFile: 'build.xml'
+      targets: 'developer-build'
+      jdkVersionOption: $(java.version)
+      publishJUnitResults: false
+  - task: Ant@1
+    displayName: Tests
+    inputs:
+      buildFile: 'build.xml'
+      targets: 'regrtest'
+      jdkVersionOption: $(java.version)
+      publishJUnitResults: true
+      testResultsFiles: './dist/testreports/TEST-*.xml'
