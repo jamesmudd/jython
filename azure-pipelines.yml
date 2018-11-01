@@ -6,11 +6,11 @@ jobs:
     vmImage: 'ubuntu-16.04'
   strategy:
     matrix:
-      Java7:
+      Java 7:
         java.version: '1.7'
-      Java8:
+      Java 8:
         java.version: '1.8'
-      Java10:
+      Java 10:
         java.version: '1.10'
   steps:
   - template: azure-pipelines-common-steps.yml
@@ -21,9 +21,9 @@ jobs:
   strategy:
     matrix:
       # No Java 7 in the Windows image
-      Java8:
+      Java 8:
         java.version: '1.8'
-      Java10:
+      Java 10:
         java.version: '1.10'
   steps:
   - template: azure-pipelines-common-steps.yml
@@ -34,9 +34,9 @@ jobs:
   strategy:
     matrix:
       # No Java 7 in th macOS image
-      Java8:
+      Java 8:
         java.version: '1.8'
-      Java10:
+      Java 10:
         java.version: '1.10'
   steps:
   # Mac image doesn't include ant by default so install it
