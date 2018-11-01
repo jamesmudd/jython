@@ -20,8 +20,7 @@ jobs:
     vmImage: 'vs2017-win2016'
   strategy:
     matrix:
-      Java7:
-        java.version: '1.7'
+      # No Java 7 in the Windows image
       Java8:
         java.version: '1.8'
       Java10:
@@ -34,8 +33,7 @@ jobs:
     vmImage: 'macOS-10.13'
   strategy:
     matrix:
-      Java7:
-        java.version: '1.7'
+      # No Java 7 in th macOS image
       Java8:
         java.version: '1.8'
       Java10:

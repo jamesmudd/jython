@@ -1,10 +1,9 @@
+# The build steps common to all platforms
+
 steps:
 # Clone the repo
 - checkout: self  # self represents the repo where the initial Pipelines YAML file was found
   fetchDepth: 1 # shallow clone
-# Just log the Java version for debugging
-- script: java -version
-  displayName: Java version report
 # ant developer-build
 - task: Ant@1
   displayName: Build
