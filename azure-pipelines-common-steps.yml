@@ -1,0 +1,24 @@
+steps:
+# Clone the repo
+- checkout: self  # self represents the repo where the initial Pipelines YAML file was found
+  fetchDepth: 1 # shallow clone
+# Just log the Java version for debugging
+- script: java -version
+  displayName: Java version report
+# ant developer-build
+- task: Ant@1
+  displayName: Build
+  inputs:
+    buildFile: 'build.xml'
+    targets: 'developer-build'
+    jdkVersionOption: $(java.version)
+    publishJUnitResults: false
+# ant regrtest
+- task: Ant@1
+  displayName: Tests
+  inputs:
+    buildFile: 'build.xml'
+    targets: 'regrtest'
+    jdkVersionOption: $(java.version)
+    publishJUnitResults: true
+    testResultsFiles: './dist/testreports/TEST-*.xml'

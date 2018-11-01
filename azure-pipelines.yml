@@ -1,11 +1,4 @@
-# Ant
-# Build your Java projects and run tests with Apache Ant.
-# Add steps that save build artifacts and more:
-# https://docs.microsoft.com/azure/devops/pipelines/languages/java
-
-#pool:
-#  vmImage: 'Ubuntu 16.04'
-
+# File for Azure Piplelines CI Builds
     
 jobs:
 - job: Linux
@@ -20,55 +13,7 @@ jobs:
       Java10:
         java.version: '1.10'
   steps:
-  - checkout: self  # self represents the repo where the initial Pipelines YAML file was found
-    fetchDepth: 5 # shallow clone
-  - task: Ant@1
-    displayName: Build
-    inputs:
-      buildFile: 'build.xml'
-      targets: 'developer-build'
-      jdkVersionOption: $(java.version)
-      publishJUnitResults: false
-  - task: Ant@1
-    displayName: Tests
-    inputs:
-      buildFile: 'build.xml'
-      targets: 'regrtest'
-      jdkVersionOption: $(java.version)
-      publishJUnitResults: true
-      testResultsFiles: './dist/testreports/TEST-*.xml'
-
-- job: macOS
-  pool:
-    vmImage: 'macOS-10.13'
-  strategy:
-    matrix:
-      Java7:
-        java.version: '1.7'
-      Java8:
-        java.version: '1.8'
-      Java10:
-        java.version: '1.10'
-  steps:
-  - checkout: self  # self represents the repo where the initial Pipelines YAML file was found
-    fetchDepth: 5 # shallow clone
-  - script: brew install ant
-    displayName: Install Ant
-  - task: Ant@1
-    displayName: Build
-    inputs:
-      buildFile: 'build.xml'
-      targets: 'developer-build'
-      jdkVersionOption: $(java.version)
-      publishJUnitResults: false
-  - task: Ant@1
-    displayName: Tests
-    inputs:
-      buildFile: 'build.xml'
-      targets: 'regrtest'
-      jdkVersionOption: $(java.version)
-      publishJUnitResults: true
-      testResultsFiles: './dist/testreports/TEST-*.xml'
+  - template: azure-pipelines-common-steps.yml
 
 - job: Windows
   pool:
@@ -82,20 +27,21 @@ jobs:
       Java10:
         java.version: '1.10'
   steps:
-  - checkout: self  # self represents the repo where the initial Pipelines YAML file was found
-    fetchDepth: 5 # shallow clone
-  - task: Ant@1
-    displayName: Build
-    inputs:
-      buildFile: 'build.xml'
-      targets: 'developer-build'
-      jdkVersionOption: $(java.version)
-      publishJUnitResults: false
-  - task: Ant@1
-    displayName: Tests
-    inputs:
-      buildFile: 'build.xml'
-      targets: 'regrtest'
-      jdkVersionOption: $(java.version)
-      publishJUnitResults: true
-      testResultsFiles: './dist/testreports/TEST-*.xml'
+  - template: azure-pipelines-common-steps.yml
+
+- job: macOS
+  pool:
+    vmImage: 'macOS-10.13'
+  strategy:
+    matrix:
+      Java7:
+        java.version: '1.7'
+      Java8:
+        java.version: '1.8'
+      Java10:
+        java.version: '1.10'
+  steps:
+  # Mac image doesn't include ant by default so install it
+  - script: brew install ant
+    displayName: Install Ant
+  - template: azure-pipelines-common-steps.yml
