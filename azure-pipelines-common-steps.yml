@@ -21,4 +21,4 @@ steps:
     jdkVersionOption: $(java.version)
     publishJUnitResults: true
     testResultsFiles: './dist/testreports/TEST-*.xml'
-    testRunTitle: $(Agent.JobName)
+    testRunTitle: $(osName) $(Agent.JobName)

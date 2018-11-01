@@ -4,6 +4,8 @@ jobs:
 - job: Linux
   pool:
     vmImage: 'ubuntu-16.04'
+  variables:
+   osName: Linux
   strategy:
     matrix:
       Java 7:
@@ -18,6 +20,8 @@ jobs:
 - job: Windows
   pool:
     vmImage: 'vs2017-win2016'
+  variables:
+   osName: Windows
   strategy:
     matrix:
       # No Java 7 in the Windows image
@@ -31,6 +35,8 @@ jobs:
 - job: macOS
   pool:
     vmImage: 'macOS-10.13'
+  variables:
+   osName: macOS
   strategy:
     matrix:
       # No Java 7 in th macOS image
