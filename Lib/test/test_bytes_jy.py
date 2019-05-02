@@ -197,6 +197,12 @@ class BufferOperationsTest(unittest.TestCase):
         self.assertEqual(str(buf), expected)
         self.assertEqual(buf.__str__(), expected)
 
+    def test_iadd_memoryview(self):
+        b = bytearray(b"abc")
+        # concatenate memoryview
+        b += memoryview('xyz')
+        self.assertEqual(str(b), 'abcxyz')
+
 
 def test_main():
     test.test_support.run_unittest(
